@@ -87,9 +87,9 @@ class AutoFoldListener(sublime_plugin.EventListener):
 
   def fold_tags(self, view, tags):
     for tag in tags:
-      for m in re.compile(r'(<' + tag + '>.*?' + '</' + tag + '>)', re.DOTALL | re.IGNORECASE).\
+      for m in re.compile(r'(<' + re.escape(tag) + '.*?' + '</' + re.escape(tag) + '>)', re.DOTALL | re.IGNORECASE).\
       finditer(view.substr(sublime.Region(0, view.size()))):
-        view.fold(sublime.Region(m.start() + len(tag) + 1, m.end()))
+        view.fold(sublime.Region(m.start() + len(tag) + 2, m.end()))
 
 
   def fold_attributes(self, view, attrs):
